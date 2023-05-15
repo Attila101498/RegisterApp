@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+.invalid {
+    color: #dc3545;
+}
+
+.invalid::before {
+    content: "X ";
+}
+
+.valid {
+    color: #198754;
+}
+
+.valid::before {
+    content: "✓ ";
+}
+
+#message {
+    margin: 10px 0;
+    display: none;
+}

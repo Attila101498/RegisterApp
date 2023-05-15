@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="hu">
+<head>
+    <title>Application with Database</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">
+                <img src="./img/logo.png" alt="logo" style="width: 50px;">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Features
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#register">
+                    Register
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal fade" id="register" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Register from Hungary</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="cancel();"></button>
+                </div>
+                <form id="registerForm" class="needs-validation m-2" method="post" novalidate>
+                    <div class="modal-body row g-3">
+                        <div class="col-6">
+                            <label for="firstname" class="form-label">First Name <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="firstname" id="firstname" 
+                                   pattern="[A-zÁ-ű\-]{3,}" required>
+                            <!-- Bármilyen ékezetes vagy ékezet nélküli karakter (szám nem!), minimum 3 karakter -->
+                            <div class="valid-feedback">
+                                First name is valid.
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid First name!
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <label for="lastname" class="form-label">Last Name <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="lastname" id="lastname" 
+                                   pattern="[A-zÁ-ű\-]{3,}" required>
+                            <!-- Bármilyen ékezetes vagy ékezet nélküli karakter (szám nem!), minimum 3 karakter -->
+                            <div class="valid-feedback">
+                                Last name is valid.
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid Last name!
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">E-mail <span style="color: red;">*</span></label>
+                            <input type="email" class="form-control" name="email" id="email" 
+                                   pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$" required>
+                            <!-- 
+                                Bármilyen ékezet nélküli karakter, szám, speciális karakterek (! # $ % & ' * + - / = ? ^ _ ` { | } ~)
+                                Speciális karakterek nem lehetnek az elején / a végén / a @ jel után
+                                . (pont) feltéve, hogy nem az első vagy az utolsó karakter, és kettő nem lehet egymás után, nem lehet a @ jel után.
+                            -->
+                            <div class="valid-feedback">
+                                E-mail is valid.
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid E-mail!
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <label for="city" class="form-label">City <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="city" id="city" 
+                                   pattern="[A-zÁ-ű]{2,20}" required>
+                            <!-- Bármilyen ékezetes vagy ékezet nélküli karakter (szám nem!), minimum 2 karakter, maximum 20 karakter -->
+                            <div class="valid-feedback">
+                                City is valid.
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid City!
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <label for="zip" class="form-label">Zip <span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" name="zip" id="zip" 
+                                   min="1000" max="9999" required>
+                            <div class="valid-feedback">
+                                Zip code is valid.
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid Zip code!
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="psw" class="form-label">Password <span style="color: red;">*</span></label>
+                            <input type="password" name="psw" id="psw" class="form-control"
+                                   pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}" required>
+                            <!-- min. egy kisbetű, min. egy nagybetű, min. 1 szám, min. 10 karakter hosszú -->
+                            
+                            <div id="message">
+                                <h6>A jelszó követelményi:</h6>
+                                <span id="letter" class="invalid">Tartalmazzon legalább egy <b>kisbetűt</b>!</span>
+                                <br>
+                                <span id="capital" class="invalid">Tartalmazzon legalább egy <b>nagybetűt</b>!</span>
+                                <br>
+                                <span id="number" class="invalid">Tartalmazzon legalább egy <b>számot</b>!</span>
+                                <br>
+                                <span id="length" class="invalid">Minimum <b>10 karakterből</b> álljon!</span>
+                                <br>
+                            </div>
+
+                            <div class="valid-feedback">
+                                Password is valid.
+                            </div>
+                            <div class="invalid-feedback">
+                                Please provide a valid Password!
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" value="" id="invalidCheck" required>
+                                <label for="invalidCheck" class="form-check-label">
+                                    Agree to terms and conditions <span style="color: red;">*</span>
+                                </label>
+                                <div class="valid-feedback">
+                                    You have agreed to terms and conditions.
+                                </div>
+                                <div class="invalid-feedback">
+                                    You must agree to terms and conditions before submitting!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancel();">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+    <script src="./js/script.js"></script>
+</body>
+</html>
